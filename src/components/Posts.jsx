@@ -1,28 +1,50 @@
+import { postData } from "../raw-data/post-data";
+import { useState } from "react";
+
+function PostItem({ title, content, likes: initialLikes }) {
+  const [likes, setLikes] = useState(initialLikes);
+
+  function handleLike() {
+    setLikes(likes + 1);
+  }
+
+  function handleDislike() {
+    if (likes > 0) {
+      setLikes(likes - 1);
+    }
+  }
+  
+  return (
+    <div className="post-item">
+      <div className="post-header">
+        <h2>{title}</h2>
+        <div className="post-social-media-stats">
+          <span className="stats-topic">Likes: </span>
+          <span className="post-likes">{likes}</span>
+        </div>
+      </div>
+      <p className="post-content">{content}</p>
+      <div className="post-actions">
+        <button className="like-button" onClick={handleLike}>Like</button>
+        <button className="dislike-button" onClick={handleDislike}>Dislike</button>
+      </div>
+    </div>
+  );
+}
+
 function Posts() {
   return (
-    <div class="app-wrapper">
-      <h1 class="app-title">Posts</h1>
-      <div class="post-list">
-        <div class="post-item">
-          <div class="post-header">
-            <h2>Post Title #1</h2>
-            <div class="post-social-media-stats">
-              <span class="stats-topic">Likes: </span>
-              <span class="post-likes">10</span>
-            </div>
-          </div>
-          <p class="post-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            vel turpis vestibulum, aliquet ipsum vitae, auctor risus. Morbi
-            tincidunt, leo non molestie consectetur, elit libero faucibus
-            tellus, sed fringilla tortor libero sit amet odio. Maecenas sed ante
-            condimentum mauris euismod pellentesque eu eu justo...
-          </p>
-          <div class="post-actions">
-            <button class="like-button">Like</button>
-            <button class="dislike-button">Dislike</button>
-          </div>
-        </div>
+    <div className="app-wrapper">
+      <h1 className="app-title">Posts</h1>
+      <div className="post-list">
+        {postData.map((item) => (
+          <PostItem
+            key={item.id}
+            title={item.title}
+            content={item.content}
+            likes={item.likes}
+          />
+        ))}
       </div>
     </div>
   );
