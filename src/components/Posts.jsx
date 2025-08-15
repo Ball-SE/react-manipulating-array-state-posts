@@ -5,19 +5,17 @@ function Posts() {
   const [posts, setPosts] = useState(postData);
 
   const handleAddLike = (likeIndex) => {
-    setPosts((like) =>
-      like.map((post, index) =>
-        index === likeIndex ? { ...post, likes: post.likes + 1 } : post
-      )
-    );
+    const updatedPosts = [...posts];
+    updatedPosts[likeIndex].likes += 1;
+    setPosts(updatedPosts);
   };
 
   const handleAddDislike = (dislikeIndex) => {
-    setPosts((dislike) =>
-      dislike.map((post, index) =>
-        index === dislikeIndex ? { ...post, likes: post.likes - 1 } : post
-      )
-    );
+    const updatedPosts = [...posts];
+    if (updatedPosts[dislikeIndex].likes > 0) {
+      updatedPosts[dislikeIndex].likes -= 1;
+    setPosts(updatedPosts);
+  }
   };
 
   return (
